@@ -43,7 +43,7 @@ jobs:
           password: ${{ secrets.NAS_PASSWORD }}
           script: |
             export PATH=$PATH:/usr/local/bin:/usr/bin:/bin
-            docker rm -f discovery
-            docker pull ${{ secrets.DOCKER_USERNAME }}/discovery
+            docker rm -f members
+            docker pull ${{ secrets.DOCKER_USERNAME }}/members
             docker run -d --name members --restart=unless-stopped -p 9001:9001 --network=notiflex ${{ secrets.DOCKER_USERNAME }}/members:latest
-
+            docker rmi $(docker images -f "dangling=true" -q)
